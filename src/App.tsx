@@ -5,7 +5,6 @@ import ThinkingModels from "@/pages/ThinkingModels";
 import Controversies from "@/pages/Controversies";
 import Projects from "@/pages/Projects";
 import Tools from "@/pages/Tools";
-import Deployment from "@/pages/Deployment";
 import { useTheme } from "@/hooks/useTheme";
 
 export default function App() {
@@ -21,7 +20,6 @@ export default function App() {
           <Route path="/controversies" element={<Controversies />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/tools" element={<Tools />} />
-          <Route path="/deployment" element={<Deployment />} />
         </Routes>
       </div>
     </Router>

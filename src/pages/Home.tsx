@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BrainCircuit, Scale, FolderKanban, Wrench, Rocket, Sparkles, ChevronRight } from 'lucide-react';
+import { BrainCircuit, Scale, FolderKanban, Wrench, Sparkles, ChevronRight } from 'lucide-react';
 
 const Home: React.FC = () => {
   const learningPath = [
@@ -173,7 +173,7 @@ const Home: React.FC = () => {
               );
             })}
           </div>
-          <div className="mt-10 grid md:grid-cols-2 gap-6">
+          <div className="mt-10">
             <Link to="/tools" className="group">
               <div className="bg-gradient-to-br from-orange-500 to-red-600 p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
                 <div className="flex items-center justify-between">
@@ -182,17 +182,6 @@ const Home: React.FC = () => {
                     <p className="text-white/80">报告生成、文献综述、PPT导出</p>
                   </div>
                   <Wrench className="w-12 h-12 text-white/90" />
-                </div>
-              </div>
-            </Link>
-            <Link to="/deployment" className="group">
-              <div className="bg-gradient-to-br from-gray-600 to-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-2">全流程部署指南</h3>
-                    <p className="text-white/80">从SOLO到上线的完整教程</p>
-                  </div>
-                  <Rocket className="w-12 h-12 text-white/90" />
                 </div>
               </div>
             </Link>
