@@ -35,10 +35,15 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'python' }) => {
           {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
           <span>{copied ? '已复制' : '复制'}</span>
         </button>
-        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-md transition-colors">
+        <a 
+          href="https://solo.trae.cn" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-md transition-colors"
+        >
           <Play className="w-3.5 h-3.5" />
           <span>在SOLO中运行</span>
-        </button>
+        </a>
       </div>
       <pre className="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto text-sm leading-relaxed">
         <code

@@ -177,11 +177,16 @@ df_rfm["用户等级"].value_counts()`
                 </div>
 
                 <div className="mt-6 flex justify-end">
-                  <button className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors">
+                  <a 
+                    href="https://solo.trae.cn" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+                  >
                     <Plus className="w-4 h-4" />
                     <span>在SOLO中创建项目</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

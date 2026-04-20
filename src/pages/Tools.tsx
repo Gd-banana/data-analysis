@@ -66,10 +66,15 @@ const Tools: React.FC = () => {
                       ))}
                     </ul>
                   </div>
-                  <button className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:opacity-90 transition-opacity">
+                  <a 
+                    href="https://solo.trae.cn" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="mt-6 w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:opacity-90 transition-opacity"
+                  >
                     <span>立即使用</span>
                     <ChevronRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             );
