@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import ThinkingModels from "@/pages/ThinkingModels";
 import Controversies from "@/pages/Controversies";
 import Projects from "@/pages/Projects";
+import ProjectDetail from "@/pages/ProjectDetail";
 import Tools from "@/pages/Tools";
 import LearnHome from "@/pages/LearnHome";
 import LearnStage from "@/pages/LearnStage";
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/thinking-models" element={<ThinkingModels />} />
           <Route path="/controversies" element={<Controversies />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/learn" element={<LearnHome />} />
           <Route path="/learn/stage-:stageId" element={<LearnStage />} />

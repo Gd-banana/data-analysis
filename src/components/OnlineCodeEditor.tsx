@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Copy, Check, Terminal, X } from 'lucide-react';
-import hljs from 'highlight.js';
-import python from 'highlight.js/lib/languages/python';
-
-hljs.registerLanguage('python', python);
 
 interface OnlineCodeEditorProps {
   initialCode?: string;
@@ -28,7 +24,6 @@ print(f"Python 版本: {sys.version}")
   const [copied, setCopied] = useState(false);
   const [pyodideReady, setPyodideReady] = useState(false);
   const pyodideRef = useRef<any>(null);
-  const outputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     loadPyodide();
@@ -36,20 +31,36 @@ print(f"Python 版本: {sys.version}")
 
   const loadPyodide = async () => {
     try {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js';
-      script.onload = async () => {
-        // @ts-ignore
-        const pyodide = await window.loadPyodide({
-          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/'
-        });
-        pyodideRef.current = pyodide;
+      // 检查 Pyodide 是否已加载
+      if (typeof window !== 'undefined' && !window.pyodide) {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js';
+        script.onload = async () => {
+          try {
+            // @ts-ignore
+            const pyodide = await window.loadPyodide({
+              indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/'
+            });
+            pyodideRef.current = pyodide;
+            setPyodideReady(true);
+            setOutput('🚀 Pyodide 已加载完成！点击运行按钮开始编码。\n');
+          } catch (error) {
+            console.error('Failed to load Pyodide:', error);
+            setOutput('❌ 加载 Pyodide 失败，请刷新页面重试。\n');
+          }
+        };
+        script.onerror = (error) => {
+          console.error('Script loading failed:', error);
+          setOutput('❌ 加载 Pyodide 脚本失败，请检查网络连接。\n');
+        };
+        document.body.appendChild(script);
+      } else if (window.pyodide) {
+        pyodideRef.current = window.pyodide;
         setPyodideReady(true);
         setOutput('🚀 Pyodide 已加载完成！点击运行按钮开始编码。\n');
-      };
-      document.body.appendChild(script);
+      }
     } catch (error) {
-      console.error('Failed to load Pyodide:', error);
+      console.error('Error in loadPyodide:', error);
       setOutput('❌ 加载 Pyodide 失败，请刷新页面重试。\n');
     }
   };
@@ -66,12 +77,20 @@ print(f"Python 版本: {sys.version}")
     try {
       const pyodide = pyodideRef.current;
 
-      // 直接运行代码
+      // 重定向标准输出
+      pyodide.setStdout({ write: (text: string) => {
+        setOutput(prev => prev + text);
+      }});
+
+      pyodide.setStderr({ write: (text: string) => {
+        setOutput(prev => prev + `❌ 错误: ${text}`);
+      }});
+
+      // 运行代码
       await pyodide.runPythonAsync(code);
-      setOutput('✅ 运行完成！\n');
 
     } catch (error) {
-      setOutput(`❌ 运行错误: ${error}\n`);
+      setOutput(prev => prev + `❌ 运行错误: ${error}\n`);
     } finally {
       setIsRunning(false);
     }
@@ -130,8 +149,9 @@ print(f"Python 版本: {sys.version}")
         </div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2" style={{ height }}>
-        <div className="relative">
+      {/* 横向布局 */}
+      <div className="flex" style={{ height }}>
+        <div className="flex-1">
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -140,12 +160,11 @@ print(f"Python 版本: {sys.version}")
           />
         </div>
         
-        <div className="bg-gray-100 dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700">
+        <div className="flex-1 bg-gray-100 dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700">
           <div className="p-3 bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">输出</span>
           </div>
           <div 
-            ref={outputRef}
             className="p-4 h-[calc(100%-48px)] overflow-y-auto font-mono text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
           >
             {output || '运行代码查看输出...'}
