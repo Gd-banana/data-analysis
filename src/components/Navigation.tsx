@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, BrainCircuit, Scale, FolderKanban, Wrench, Menu, X } from 'lucide-react';
+import { Home, BrainCircuit, Scale, FolderKanban, Wrench, Menu, X, GraduationCap } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -8,6 +8,7 @@ const Navigation: React.FC = () => {
 
   const navItems = [
     { path: '/', label: '首页', icon: Home },
+    { path: '/learn', label: '学习路径', icon: GraduationCap },
     { path: '/thinking-models', label: '核心思维', icon: BrainCircuit },
     { path: '/controversies', label: '业内争议', icon: Scale },
     { path: '/projects', label: '实战项目', icon: FolderKanban },
