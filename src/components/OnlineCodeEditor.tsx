@@ -66,38 +66,12 @@ print(f"Python 版本: {sys.version}")
     try {
       const pyodide = pyodideRef.current;
 
-      const result = await pyodide.runPythonAsync(`
-import sys
-from io import StringIO
-
-sys.stdout = capture_output = StringIO()
-sys.stderr = capture_error = StringIO()
-
-try:
-${code.split('\n').map(line => '    ' + line).join('\n')}
-except Exception as e:
-    import traceback
-    traceback.print_exc()
-
-sys.stdout = sys.__stdout__
-sys.stderr = sys.__stderr__
-
-output = capture_output.getvalue()
-error = capture_error.getvalue()
-
-(output, error)
-      `);
-
-      const [stdout, stderr] = result.toJs();
-      
-      let finalOutput = '';
-      if (stdout) finalOutput += stdout;
-      if (stderr) finalOutput += `❌ 错误:\n${stderr}`;
-      
-      setOutput(finalOutput || '✅ 运行完成，无输出。');
+      // 直接运行代码
+      await pyodide.runPythonAsync(code);
+      setOutput('✅ 运行完成！\n');
 
     } catch (error) {
-      setOutput(`❌ 运行错误: ${error}`);
+      setOutput(`❌ 运行错误: ${error}\n`);
     } finally {
       setIsRunning(false);
     }
@@ -117,8 +91,6 @@ error = capture_error.getvalue()
     setCode(initialCode);
     setOutput('');
   };
-
-  const highlightedCode = hljs.highlight(code, { language: 'python' }).value;
 
   return (
     <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
