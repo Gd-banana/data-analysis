@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Code, CheckCircle, ChevronLeft, ChevronRight, Progress } from 'lucide-react';
+import { BookOpen, Code, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import OnlineCodeEditor from '@/components/OnlineCodeEditor';
 import CodeBlock from '@/components/CodeBlock';
 
